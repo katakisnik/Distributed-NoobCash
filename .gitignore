@@ -1,5 +1,6 @@
 # Virtual Enviroment
 venv/*
+p3.6/*
 
 # Django #
 *.log
