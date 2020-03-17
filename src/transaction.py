@@ -6,7 +6,7 @@ from Crypto.Hash import SHA256
 class Transaction(object):
 
     #constructor
-    def __init__(self, sender, receiver, amount, id, inputs=None, signature=None):
+    def __init__(self, sender, receiver, amount, inputs, id=None, signature=None):
         self.sender = sender
         self.receiver = receiver
         self.amount = amount
@@ -37,6 +37,7 @@ class Transaction(object):
         # Hash string
         return SHA256.new(transaction_to_string.encode())
 
+    #in sign the id and the signature of the transaction are created
     def sign(self):
         # Calculate hash
         hash = self.calculate_hash()
@@ -63,10 +64,30 @@ class Transaction(object):
                 raise Exception(f'User with PublicKey({sender}) has not enough money')
 
             # Create the transaction
-            t = Transaction(sender,receiver,amount,id=new_id,inputs=inputs)
+            t = Transaction(sender,receiver,amount, inputs)
             t.sign()
             # Each transactions have
             # utxos[pubkey] = [{transaction_id, who, amount}]
+
+            #create outputs
+            t.outputs = [{
+                'id': t.id,
+                'who': t.sender,
+                'amount': sender_money - amount
+            }, {
+                'id': t.id,
+                'who': t.receiver,
+                'amount': amount
+            }]
+
+            #save transaction
+            state.transactions.append(t)
+
+            #update the utxos
+            state.utxos[sender] = [t.outputs[0]]
+            state.utxos[receiver].append(t.outputs[1])
+        
+            return t
 
         except Exception as e:
             print(e)
