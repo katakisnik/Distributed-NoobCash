@@ -1,5 +1,7 @@
 import state
 import copy
+import json
+from Crypto.Hash import SHA256
 
 class Transaction(object):
 
@@ -20,9 +22,26 @@ class Transaction(object):
         if (self.sender == value.sender and self.receiver == value.receiver and self.amount == value.amount and self.id == value.id and self.inputs == value.inputs and self.signature == value.signature):
             return True
 
+    def dump(self):
+        '''convert transaction to string'''
+        return json.dumps(dict(
+            sender=self.sender,
+            receiver=self.receiver,
+            amount=self.amount,
+            inputs=self.inputs,
+            ), sort_keys=True)
+
+    def calculate_hash(self):
+        # Convert object to string
+        transaction_to_string = self.dump()
+        # Hash string
+        return SHA256.new(transaction_to_string.encode())
+
     def sign(self):
+        # Calculate hash
+        hash = self.calculate_hash()
         pass
-        
+
 
     @staticmethod
     def create_transaction(receiver, amount):
