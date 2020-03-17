@@ -16,6 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+# import methods
+from . import views
+
+# set urls
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('service/alert/',service.views.alert()),
+    path('alert/', views.alert, name='alert')
 ]
