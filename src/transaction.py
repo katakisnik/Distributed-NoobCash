@@ -2,6 +2,10 @@ import state
 import copy
 import json
 from Crypto.Hash import SHA256
+from Crypto.PublicKey import RSA
+from Crypto.Signature import PKCS1_v1_5
+import base64
+
 
 class Transaction(object):
 
@@ -37,12 +41,41 @@ class Transaction(object):
         # Hash string
         return SHA256.new(transaction_to_string.encode())
 
-    #in sign the id and the signature of the transaction are created
     def sign(self):
-        # Calculate hash
+        '''Creates the id and the signature of the transaction'''
+
+        # Calculate hash - hash compresses the string
         hash = self.calculate_hash()
-        self.signature = hash
-        pass
+
+        # Now sign using the private key
+        key = RSA.importKey(state.privatekey)
+        # Create the signer using his private key
+        signer = PKCS1_v1_5.new(key)
+        # Now sign the transaction (hashed/compressed)
+        self.signature = signer.sign(hash)
+
+        # id is the hex of the hashed transaction
+        # returns a HEX string representing the hash
+        self.id = hash.hexdigest()
+
+        return self.signature
+
+    def verify_signature(signature):
+        '''Verifies the signature of a transaction.
+           If the signature is verified returns True.
+           Otherwise returns False'''
+        # Get the public key
+        pub_key = self.sender
+        # import to RSA
+        key = RSA.importKey(pub_key.endode())
+        # Create the verifier (same as signer)
+        verifier = PKCS1_v1_5.new(key)
+        # Get the transaction hash
+        hash = self.calculate_hash()
+        # Verify the signature
+        if verifier.verify(hash, signature):
+            return True
+        return False
 
 
     @staticmethod
@@ -87,14 +120,14 @@ class Transaction(object):
             #update the utxos
             state.utxos[sender] = [t.outputs[0]]
             state.utxos[receiver].append(t.outputs[1])
-        
+
             return t
 
         except Exception as e:
             print(e)
             return None
 
-    
+
     #the genesis transactions that happens as a participant enters the system
     @staticmethod
     def create_first_transaction():
@@ -113,6 +146,6 @@ class Transaction(object):
             state.transactions.append(t)
 
             return t
-        
+
         except Exception as e:
             print(e)
