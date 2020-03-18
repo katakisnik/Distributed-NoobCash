@@ -25,6 +25,19 @@ class Transaction(object):
             return False
         if (self.sender == value.sender and self.receiver == value.receiver and self.amount == value.amount and self.id == value.id and self.inputs == value.inputs and self.signature == value.signature):
             return True
+        else:
+            return False
+    
+    def dump_sendable(self):
+        '''convert to sendable json string'''
+        return json.dumps(dict(
+            sender=self.sender,
+            recepient=self.recepient,
+            amount=self.amount,
+            inputs=self.inputs,
+            id=self.id,
+            signature=self.signature
+        ), sort_keys=True)
 
     def dump(self):
         '''convert transaction to string'''
