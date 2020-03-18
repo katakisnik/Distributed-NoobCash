@@ -1,4 +1,4 @@
-import state
+from . import state
 import copy
 import json
 from Crypto.Hash import SHA256

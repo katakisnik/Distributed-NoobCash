@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path
 
 # import methods
-from . import views
-
+from . import views, gets
 # set urls
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
     # path('service/alert/',service.views.alert()),
-    path('alert/', views.alert, name='alert')
+    path('alert/', views.alert, name='alert'),
+    path('get_setting/', gets.GetSetting.as_view()),
 ]
