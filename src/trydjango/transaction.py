@@ -73,7 +73,7 @@ class Transaction(object):
 
         return self.signature
 
-    def verify_signature(signature):
+    def verify_signature(self, signature):
         '''Verifies the signature of a transaction.
            If the signature is verified returns True.
            Otherwise returns False'''
