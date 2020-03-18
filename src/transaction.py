@@ -32,7 +32,7 @@ class Transaction(object):
         '''convert to sendable json string'''
         return json.dumps(dict(
             sender=self.sender,
-            recepient=self.recepient,
+            receiver=self.receiver,
             amount=self.amount,
             inputs=self.inputs,
             id=self.id,
