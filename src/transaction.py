@@ -41,6 +41,7 @@ class Transaction(object):
     def sign(self):
         # Calculate hash
         hash = self.calculate_hash()
+        self.signature = hash
         pass
 
 
@@ -92,3 +93,26 @@ class Transaction(object):
         except Exception as e:
             print(e)
             return None
+
+    
+    #the genesis transactions that happens as a participant enters the system
+    @staticmethod
+    def create_first_transaction():
+        try:
+            #each participant has 100NBC in his wallet at the start
+            t = Transaction(state.publickey, state.publickey, 100, [])
+            t.sign()
+
+            t.outputs = [{
+                'id': t.id,
+                'who': t.sender,
+                'amount': t.amount
+            }]
+
+            state.utxos[state.publickey] = [t.outputs[0]]
+            state.transactions.append(t)
+
+            return t
+        
+        except Exception as e:
+            print(e)
