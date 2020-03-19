@@ -64,11 +64,11 @@ class Block(object):
             )
 
             #check if the created block is valid
-            if len(block.transactions) != settings.BLOCK_CAPACITY:
+            if len(block.transactions) != nbcsettings.BLOCK_CAPACITY:
                 raise Exception('invalid block capacity')
             if block.current_hash != block.calculate_hash():
                 raise Exception('invalid hash')
-            if block.current_hash.startswith('0'*settings.DIFFICULTY):
+            if block.current_hash.startswith('0'*nbcsettings.DIFFICULTY):
                 raise Exception('invalid proof of work')
             
             #we are starting from the utxos of the last block
@@ -77,7 +77,7 @@ class Block(object):
 
             for tx in transactions:
                 #needs to be implemented
-                result = Transaction.validate(tx)
+                result = Transaction.validate_transaction(tx)
                 if result == False:
                     raise Exception('invalid transaction')
             

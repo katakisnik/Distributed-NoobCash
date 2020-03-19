@@ -162,3 +162,57 @@ class Transaction(object):
 
         except Exception as e:
             print(e)
+    
+    @staticmethod
+    def validate_transaction(transaction_json):
+        try:
+            t = Transaction(**json.loads(transaction_json))
+
+            if t in state.transactions:
+                return False, t
+
+            if t.id != t.calculate_hash().hexdigest():
+                raise Exception('invalid hash')
+
+            if not t.verify_signature():
+                raise Exception('invalid signature')
+            
+            #verify that inputs are utxos
+            sender_utxos = copy.deepcopy(state.utxos[t.sender])
+            budget = 0
+            for txin_id in t.inputs:
+                found = False
+                for utxo in sender_utxos:
+                    if utxo['id'] == txin_id and utxo['who'] == t.sender:
+                        found = True
+                        budget += utxo['amount']
+                        sender_utxos.remove(utxo)
+                        break
+                
+                if not found:
+                    raise Exception('missing inputs')
+
+            if budget < t.amount:
+                raise Exception('not enough money')
+            
+            #create outputs
+            t.outputs = [{
+                'id': t.id,
+                'who': t.sender,
+                'amount': budget - t.amount
+            }, {
+                'id': t.id,
+                'who': t.receiver,
+                'amount': t.amount
+            }]
+
+            #update utxos
+            sender_utxos.append(t.outputs[0])
+            state.utxos[t.sender] = sender_utxos
+            state.utxos[t.receiver].append(t.outputs[1])
+            state.transactions.append(t)
+
+            return True, t
+        
+        except Exception as e:
+            return False, None
