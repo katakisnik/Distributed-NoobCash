@@ -8,7 +8,7 @@ from django.views import View
 # from transaction import Transaction
 # import state
 from . import nbcsettings, state
-# from .block import Block
+from .block import Block
 
 class GetSetting(View):
     '''

@@ -3,7 +3,7 @@ import json
 from . import state, nbcsettings
 from .transaction import Transaction
 
-from Cypto.Hash import SHA384
+from Crypto.Hash import SHA384
 
 class Block(object):
 
