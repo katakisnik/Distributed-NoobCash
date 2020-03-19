@@ -25,4 +25,6 @@ urlpatterns = [
     # path('service/alert/',service.views.alert()),
     path('alert/', views.alert, name='alert'),
     path('get_setting/', gets.GetSetting.as_view()),
+    path('create_coordinator/', gets.CreateCoordinator.as_view()),
+    path('get_participants/', gets.GetParticipants.as_view())
 ]
