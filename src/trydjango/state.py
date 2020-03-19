@@ -31,3 +31,6 @@ miner_pid = None
 # genesis block and utxos
 genesis_block = None
 genesis_utxos = []
+
+#token for transaction authentication
+token = None
