@@ -3,6 +3,7 @@ import sys
 import os
 import json
 from subprocess import Popen
+from signal import SIGTERM
 import nbcsettings
 import state
 
@@ -23,6 +24,16 @@ def start():
                             host, json.dumps(transactions),
                             state.token)
             state.miner_pid = process.pid
+        except Exception as e:
+            print(e)
+
+
+def stop():
+    if state.miner_pid is not None:
+        try:
+            os.kill(state.miner_pid, SIGTERM)
+            state.miner_pid = None
+            print(f'Killing miner with PID:{state.miner_pid}')
         except Exception as e:
             print(e)
 
