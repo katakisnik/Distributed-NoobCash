@@ -92,7 +92,6 @@ class Block(object):
 
         except Exception as e:
             print(e)
-<<<<<<< HEAD
             
     @staticmethod
     def create_genesis_block(num_participants):
@@ -124,36 +123,3 @@ class Block(object):
         
         except Exception as e:
             print(e)
-=======
-
-        @staticmethod
-        def create_genesis_block():
-            try:
-                flag = Transaction.create_first_transaction()
-                if not flag:
-                    raise Exception('could not create genesis transaction')
-
-                transactions = []
-                for tx in state.transactions:
-                    transactions.append(tx.dump_sendable())
-
-                block = Block(
-                    transactions=transactions,
-                    nonce = 0,
-                    current_hash = 'genesis',
-                    previous_hash = 1,
-                    index = 0
-                )
-
-                block.current_hash = block.calculate_hash().hexdigest()
-                state.blockchain = [block]
-                state.transactions = []
-                state.valid_utxos = copy.deepcopy(state.utxos)
-                state.genesis_block = Block(**json.loads(block.dump_sendable()), index=0)
-                state.genesis_utxos = copy.deepcopy(state.utxos)
-
-                return True
-
-            except Exception as e:
-                print(e)
->>>>>>> 65439106c63888b1ddbb72f52d31ce2f3b4ce0ec
