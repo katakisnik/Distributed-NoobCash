@@ -146,10 +146,10 @@ class Transaction(object):
 
     #the genesis transactions that happens as a participant enters the system
     @staticmethod
-    def create_first_transaction():
+    def create_first_transaction(num_participants):
         try:
             # each participant has 100NBC in his wallet at the start
-            t = Transaction(state.publickey, state.publickey, 100, [])
+            t = Transaction(state.publickey, state.publickey, 100*num_participants, [])
             t.sign()
 
             t.outputs = [{

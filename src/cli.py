@@ -17,12 +17,15 @@ participants = args.num_participants
 
 API = f'{host}/create_coordinator/'
 
-try:
-    response = requests.post(API, {
-        'num_participants': participants,
-        'host': host
-    })
-    assert response.status_code == 200
-except Exception as e:
-    print('failed')
-    exit(1)
+if participants == None:
+    print('Hello i am a normal participator')
+else:
+    try:
+        response = requests.post(API, {
+            'num_participants': participants,
+            'host': host
+        })
+        assert response.status_code == 200
+    except Exception as e:
+        print('failed')
+        exit(1)
