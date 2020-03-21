@@ -1,4 +1,4 @@
-#Global variables for each state of our application
+"""Global variables for each state of our application."""
 
 # list of validated blocks
 blockchain = []
