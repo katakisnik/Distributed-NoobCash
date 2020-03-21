@@ -1,15 +1,14 @@
-from . import state
 import copy
 import json
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
-import base64
+from . import state
 
 
 class Transaction(object):
 
-    #constructor
+    # constructor
     def __init__(self, sender, receiver, amount, inputs, id=None, signature=None):
         self.sender = sender
         self.receiver = receiver
@@ -19,15 +18,17 @@ class Transaction(object):
         self.signature = signature
         self.outputs = []
 
-    #compare
+    # compare
     def __eq__(self, value):
         if not isinstance(value, Transaction):
             return False
-        if (self.sender == value.sender and self.receiver == value.receiver and self.amount == value.amount and self.id == value.id and self.inputs == value.inputs and self.signature == value.signature):
+        if (self.sender == value.sender and self.receiver == value.receiver and
+           self.amount == value.amount and self.id == value.id and
+           self.inputs == value.inputs and self.signature == value.signature):
             return True
         else:
             return False
-    
+
     def dump_sendable(self):
         '''convert to sendable json string'''
         return json.dumps(dict(
@@ -73,10 +74,12 @@ class Transaction(object):
 
         return self.signature
 
-    def verify_signature(self, signature):
+    def verify_signature(self):
         '''Verifies the signature of a transaction.
            If the signature is verified returns True.
            Otherwise returns False'''
+        # Set the signature
+        signature = self.signature
         # Get the public key
         pub_key = self.sender
         # import to RSA
@@ -145,7 +148,7 @@ class Transaction(object):
     @staticmethod
     def create_first_transaction():
         try:
-            #each participant has 100NBC in his wallet at the start
+            # each participant has 100NBC in his wallet at the start
             t = Transaction(state.publickey, state.publickey, 100, [])
             t.sign()
 
@@ -162,7 +165,7 @@ class Transaction(object):
 
         except Exception as e:
             print(e)
-    
+
     @staticmethod
     def validate_transaction(transaction_json):
         try:
@@ -176,8 +179,8 @@ class Transaction(object):
 
             if not t.verify_signature():
                 raise Exception('invalid signature')
-            
-            #verify that inputs are utxos
+
+            # verify that inputs are utxos
             sender_utxos = copy.deepcopy(state.utxos[t.sender])
             budget = 0
             for txin_id in t.inputs:
@@ -188,14 +191,14 @@ class Transaction(object):
                         budget += utxo['amount']
                         sender_utxos.remove(utxo)
                         break
-                
+
                 if not found:
                     raise Exception('missing inputs')
 
             if budget < t.amount:
                 raise Exception('not enough money')
-            
-            #create outputs
+
+            # create outputs
             t.outputs = [{
                 'id': t.id,
                 'who': t.sender,
@@ -206,13 +209,14 @@ class Transaction(object):
                 'amount': t.amount
             }]
 
-            #update utxos
+            # update utxos
             sender_utxos.append(t.outputs[0])
             state.utxos[t.sender] = sender_utxos
             state.utxos[t.receiver].append(t.outputs[1])
             state.transactions.append(t)
 
             return True, t
-        
+
         except Exception as e:
+            print(e)
             return False, None
