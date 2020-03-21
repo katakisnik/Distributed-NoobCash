@@ -5,6 +5,7 @@ from .transaction import Transaction
 
 from Crypto.Hash import SHA384
 
+
 class Block(object):
 
     # constructor
@@ -19,7 +20,7 @@ class Block(object):
         if timestamp is None:
             self.timestamp = str(datetime.datetime.now())
 
-    #equality check
+    # equality check
     def __eq__(self, value):
         if not isinstance(value, Block):
             return False
@@ -28,15 +29,15 @@ class Block(object):
         else:
             return False
 
-    #json dump to create has
+    # json dump to create has
     def dump(self):
         return json.dumps(dict(
-            transactions = self.transactions,
-            nonce = self.nonce,
-            timestamp = self.timestamp
+            transactions=self.transactions,
+            nonce=self.nonce,
+            timestamp=self.timestamp
         ))
 
-    #hash calculation
+    # hash calculation
     def calculate_hash(self):
         return SHA384.new(self.dump().encode())
 
@@ -70,7 +71,7 @@ class Block(object):
                 raise Exception('invalid hash')
             if block.current_hash.startswith('0'*nbcsettings.DIFFICULTY):
                 raise Exception('invalid proof of work')
-            
+
             #we are starting from the utxos of the last block
             state.utxos = copy.deepcopy(state.valid_utxos)
             state.transactions = []
@@ -80,7 +81,7 @@ class Block(object):
                 result = Transaction.validate_transaction(tx)
                 if result == False:
                     raise Exception('invalid transaction')
-            
+
             state.transactions = []
 
             #block added to blockchain
@@ -88,9 +89,10 @@ class Block(object):
             state.valid_utxos = copy.deepcopy(state.utxos)
 
             return block
-        
+
         except Exception as e:
             print(e)
+<<<<<<< HEAD
             
     @staticmethod
     def create_genesis_block(num_participants):
@@ -122,3 +124,36 @@ class Block(object):
         
         except Exception as e:
             print(e)
+=======
+
+        @staticmethod
+        def create_genesis_block():
+            try:
+                flag = Transaction.create_first_transaction()
+                if not flag:
+                    raise Exception('could not create genesis transaction')
+
+                transactions = []
+                for tx in state.transactions:
+                    transactions.append(tx.dump_sendable())
+
+                block = Block(
+                    transactions=transactions,
+                    nonce = 0,
+                    current_hash = 'genesis',
+                    previous_hash = 1,
+                    index = 0
+                )
+
+                block.current_hash = block.calculate_hash().hexdigest()
+                state.blockchain = [block]
+                state.transactions = []
+                state.valid_utxos = copy.deepcopy(state.utxos)
+                state.genesis_block = Block(**json.loads(block.dump_sendable()), index=0)
+                state.genesis_utxos = copy.deepcopy(state.utxos)
+
+                return True
+
+            except Exception as e:
+                print(e)
+>>>>>>> 65439106c63888b1ddbb72f52d31ce2f3b4ce0ec
