@@ -99,7 +99,7 @@ class Block(object):
             flag = Transaction.create_first_transaction(num_participants)
             if not flag:
                 raise Exception('could not create genesis transaction')
-            
+            print('first transaction created')
             transactions = []
             for tx in state.transactions:
                 transactions.append(tx.dump_sendable())
