@@ -49,6 +49,17 @@ class Transaction(object):
             inputs=self.inputs,
             ), sort_keys=True)
 
+    def dict(self):
+        '''convert to dict'''
+        return dict(
+            sender=self.sender,
+            receiver=self.receiver,
+            amount=self.amount,
+            inputs=self.inputs,
+            id=self.id,
+            signature=self.signature
+        )
+
     def calculate_hash(self):
         # Convert object to string
         transaction_to_string = self.dump()
