@@ -1,4 +1,5 @@
 import json
+import copy
 import requests
 
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -82,7 +83,7 @@ class ConnectParticipant(View):
                 requests.post(api, {
                     'participant_id': participant['id'],
                     'participants': json.dumps(state.participants),
-                    'genesis_block': state.genesis_block,
+                    'genesis_block': state.genesis_block.dump_sendable(),
                     'genesis_utxos': json.dumps(state.utxos)
                 })
             #after everyone connects the coordinator sends to everyone 100NBC

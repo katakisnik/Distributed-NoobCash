@@ -1,4 +1,5 @@
 import datetime
+import copy
 import json
 from . import state, nbcsettings
 from .transaction import Transaction
@@ -110,7 +111,9 @@ class Block(object):
                 raise Exception('could not create genesis transaction')
             print('first transaction created')
             transactions = []
+            print(state.transactions)
             for tx in state.transactions:
+                print(tx)
                 transactions.append(tx.dump_sendable())
             print('transactions loaded')
             block = Block(

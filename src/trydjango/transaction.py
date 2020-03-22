@@ -37,7 +37,7 @@ class Transaction(object):
             amount=self.amount,
             inputs=self.inputs,
             id=self.id,
-            signature=self.signature
+           # signature=self.signature
         ), sort_keys=True)
 
     def dump(self):
@@ -121,9 +121,8 @@ class Transaction(object):
             # available money of the sender
             sender_money = [t_utxo['amount'] for t_utxo in sender_utxos if t_utxo['who'] == sender ]
             # Check if the available money is enough
-            if sender_money < amount :
+            if sum(sender_money) < amount :
                 raise Exception(f'User with PublicKey({sender}) has not enough money')
-
             # Create the transaction
             t = Transaction(sender,receiver,amount, inputs)
             t.sign()
@@ -134,7 +133,7 @@ class Transaction(object):
             t.outputs = [{
                 'id': t.id,
                 'who': t.sender,
-                'amount': sender_money - amount
+                'amount': sum(sender_money) - amount
             }, {
                 'id': t.id,
                 'who': t.receiver,
