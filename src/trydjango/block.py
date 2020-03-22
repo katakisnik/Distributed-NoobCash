@@ -118,7 +118,7 @@ class Block(object):
             state.valid_utxos = copy.deepcopy(state.utxos)
             state.genesis_block = Block(**json.loads(block.dump_sendable()), index=0)
             state.genesis_utxos = copy.deepcopy(state.utxos)
-
+            print('everything fine')
             return True
         
         except Exception as e:
