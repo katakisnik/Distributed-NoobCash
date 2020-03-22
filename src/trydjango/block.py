@@ -51,6 +51,15 @@ class Block(object):
             previous_hash=self.previous_hash
         ), sort_keys=True)
 
+    def dict(self):
+        return dict(
+            timestamp=self.timestamp,
+            transactions=self.transactions,
+            nonce=self.nonce,
+            current_hash=self.current_hash,
+            previous_hash=self.previous_hash
+        )
+
     #create a block, the miner has found nonce for the list of transactions
     @staticmethod
     def create_block(transactions, nonce, newhash, timestamp):
@@ -103,7 +112,7 @@ class Block(object):
             transactions = []
             for tx in state.transactions:
                 transactions.append(tx.dump_sendable())
-
+            print('transactions loaded')
             block = Block(
                 transactions=transactions,
                 nonce = 0,
