@@ -99,7 +99,7 @@ class Block(object):
             flag = Transaction.create_first_transaction(num_participants)
             if not flag:
                 raise Exception('could not create genesis transaction')
-            
+            print('first transaction created')
             transactions = []
             for tx in state.transactions:
                 transactions.append(tx.dump_sendable())
@@ -118,7 +118,7 @@ class Block(object):
             state.valid_utxos = copy.deepcopy(state.utxos)
             state.genesis_block = Block(**json.loads(block.dump_sendable()), index=0)
             state.genesis_utxos = copy.deepcopy(state.utxos)
-
+            print('everything fine')
             return True
         
         except Exception as e:
