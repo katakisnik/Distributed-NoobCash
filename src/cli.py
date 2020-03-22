@@ -14,7 +14,7 @@ args = parser.parse_args()
 
 coordinatorhost = f'http://192.168.1.5:8000'
 host = f'http://{args.host}:{args.port}'
-participants = args.num_participants
+participants = int(args.num_participants)
 
 api = f'{coordinatorhost}/create_coordinator/'
 
