@@ -12,16 +12,18 @@ parser.add_argument('port', type=int)
 parser.add_argument('num_participants')
 args = parser.parse_args()
 
+coordinatorhost = f'http://192.168.1.5:8000'
 host = f'http://{args.host}:{args.port}'
 participants = args.num_participants
 
-API = f'{host}/create_coordinator/'
+api = f'{coordinatorhost}/create_coordinator/'
 
 if participants == None:
     print('Hello i am a normal participator')
+    api = f'{coordinatorhost}/create_participant'
 else:
     try:
-        response = requests.post(API, {
+        response = requests.post(api, {
             'num_participants': participants,
             'host': host
         })
