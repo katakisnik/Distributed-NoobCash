@@ -20,7 +20,7 @@ api = f'{coordinatorhost}/create_coordinator/'
 
 if participants == 0:
     print('Hello i am a normal participator')
-    api = f'{coordinatorhost}/create_participant/'
+    api = f'{host}/create_participant/'
     try:
         response = requests.post(api, {
             'num_participants': participants,
