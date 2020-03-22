@@ -1,5 +1,6 @@
 import copy
 import json
+import base64
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
@@ -37,7 +38,7 @@ class Transaction(object):
             amount=self.amount,
             inputs=self.inputs,
             id=self.id,
-           # signature=self.signature
+           signature=self.signature
         ), sort_keys=True)
 
     def dump(self):
@@ -77,7 +78,7 @@ class Transaction(object):
         # Create the signer using his private key
         signer = PKCS1_v1_5.new(key)
         # Now sign the transaction (hashed/compressed)
-        self.signature = signer.sign(hash)
+        self.signature = base64.b64encode(signer.sign(hash)).decode()
 
         # id is the hex of the hashed transaction
         # returns a HEX string representing the hash
