@@ -90,7 +90,7 @@ class ConnectParticipant(View):
                 if publickey == state.publickey:
                     continue
                 transaction = Transaction.create_transaction(publickey, 100)
-                print(transaction.dump_sendable())
+                #print(transaction.dump_sendable())
                 if not transaction:
                     return HttpResponseBadRequest()
 
