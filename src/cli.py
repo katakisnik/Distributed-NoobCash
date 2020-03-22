@@ -18,7 +18,7 @@ participants = args.num_participants
 
 api = f'{coordinatorhost}/create_coordinator/'
 
-if participants == None:
+if participants == 0:
     print('Hello i am a normal participator')
     api = f'{coordinatorhost}/create_participant'
 else:
