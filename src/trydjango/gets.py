@@ -41,6 +41,7 @@ class CreateParticipant(View):
         keygenerator.keygenerator()
         #participant sends his configuration to the coordinator
         api = f'{nbcsettings.CORDINATOR}/participant_connect/'
+        print(api)
         data = {
             'host': host,
             'publickey': state.publickey
@@ -56,6 +57,7 @@ class ConnectParticipant(View):
     def post(self, request):
         host = request.POST.get('host')
         publickey = request.POST.get('publickey')
+        print(publickey)
 
         #id is equal to number of participants already present
         participantid = len(state.participants)
