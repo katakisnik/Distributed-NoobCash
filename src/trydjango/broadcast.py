@@ -4,7 +4,7 @@ from . import state
 def broadcast(api, message):
     #we send the message as data for each other /host/api
 
-    for participant in state.participants:
+    for participant in state.participants.values():
         if participant['id'] == state.participant_id:
             continue
 
