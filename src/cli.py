@@ -51,10 +51,10 @@ while True:
         api = f'{host}/get_transactions/'
         blocks = requests.get(api).json()['blocks']
         for b in blocks:
-            print(f'\nBlock {b["index"]}: (SHA: {b["hash"][:15]}\tPREV: {b["prev"][:15]})')
+            print(f'\nBlock {b["index"]}: (SHA: {b["hash"]}\tPREV: {b["prev"]})')
 
             for tx in b['transactions']:
-                print(f'{tx["sender_id"]}\t->\t{tx["recepient_id"]}\t{tx["amount"]}\tNBC\t{tx["id"][:10]}')
+                print(f'{tx["sender_id"]}\t->\t{tx["receiver_id"]}\t{tx["amount"]}\tNBC\t{tx["id"][:10]}')
     
     elif cmd == 'exit':
         exit(0)
