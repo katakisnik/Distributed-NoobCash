@@ -95,7 +95,7 @@ class Transaction(object):
         # Get the public key
         pub_key = self.sender
         # import to RSA
-        key = RSA.importKey(pub_key.endode())
+        key = RSA.importKey(pub_key.encode())
         # Create the verifier (same as signer)
         verifier = PKCS1_v1_5.new(key)
         # Get the transaction hash
