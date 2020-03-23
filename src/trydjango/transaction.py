@@ -189,7 +189,7 @@ class Transaction(object):
                 raise Exception('invalid hash')
 
             #if not t.verify_signature():
-             #   raise Exception('invalid signature')
+            #   raise Exception('invalid signature')
 
             # verify that inputs are utxos
             sender_utxos = copy.deepcopy(state.utxos[t.sender])

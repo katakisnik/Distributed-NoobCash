@@ -77,9 +77,9 @@ class Block(object):
             #check if the created block is valid
             if len(block.transactions) != nbcsettings.BLOCK_CAPACITY:
                 raise Exception('invalid block capacity')
-            if block.current_hash != block.calculate_hash():
+            if block.current_hash != block.calculate_hash().hexdigest():
                 raise Exception('invalid hash')
-            if block.current_hash.startswith('0'*nbcsettings.DIFFICULTY):
+            if not block.current_hash.startswith('0'*nbcsettings.DIFFICULTY):
                 raise Exception('invalid proof of work')
 
             #we are starting from the utxos of the last block
@@ -88,7 +88,7 @@ class Block(object):
 
             for tx in transactions:
                 #needs to be implemented
-                result = Transaction.validate_transaction(tx)
+                result, transaction = Transaction.validate_transaction(tx)
                 if result == False:
                     raise Exception('invalid transaction')
 
@@ -135,3 +135,58 @@ class Block(object):
         
         except Exception as e:
             print(e)
+
+    @staticmethod
+    def validate_block(block_json):
+        try:
+            # save state, in order to properly restore in case of a bad block
+            TRANSACTIONS_BACKUP = copy.deepcopy(state.transactions)
+            UTXOS_BACKUP = copy.deepcopy(state.utxos)
+            BLOCKCHAIN_BACKUP = copy.deepcopy(state.blockchain)
+            VALID_UTXOS_BACKUP = copy.deepcopy(state.valid_utxos)
+
+            previous_block = state.blockchain[-1]
+            new_index = previous_block.index + 1
+            new_block = Block(**json.loads(block_json), index=new_index)
+
+            if new_block.calculate_hash().hexdigest() != new_block.current_hash:
+                raise Exception('invalid has')
+            if len(new_block.transactions) != nbcsettings.BLOCK_CAPACITY:
+                raise Exception('invalid block capacity')
+            if not new_block.current_hash.startswith('0'*nbcsettings.DIFFICULTY):
+                raise Exception('invalid proof of work')
+
+            if new_block.previous_hash == previous_block.current_hash:
+
+                state.utxos = copy.deepcopy(state.valid_utxos)
+                state.transactions = []
+
+                for tx in new_block.transactions:
+                    result, transaction = Transaction.validate_transaction(tx)
+                    if result == False:
+                        raise Exception('invalid transaction')
+                    #remove transaction after validating    
+                    state.transactions.remove(transaction)
+
+                state.blockchain.append(new_block)
+                state.valid_utxos = copy.deepcopy(state.utxos)
+
+                return 'good'    
+
+            else:
+                for block in state.blockchain[:-1]:
+                    if block.current_hash == new_block.previous_hash:
+                        #the parent of our new block is a previous block so a smaller chain is produced
+                        return 'dropped'
+                #unkown block
+                return 'consensus'
+        
+        except Exception as e:
+            #restore state
+            state.transactions = TRANSACTIONS_BACKUP
+            state.blockchain = BLOCKCHAIN_BACKUP
+            state.utxos = UTXOS_BACKUP
+            state.valid_utxos = VALID_UTXOS_BACKUP
+
+            print(e)
+            return 'error'
