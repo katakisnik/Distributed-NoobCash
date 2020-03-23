@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 # import methods
-from . import views, gets, transactionrequests
+from . import views, gets, transactionrequests, blockrequests
 # set urls
 
 urlpatterns = [
@@ -32,5 +32,8 @@ urlpatterns = [
     path('participant_accept/', gets.AcceptParticipant.as_view()),
 
     path('receive_transaction/', transactionrequests.ReceiveTransaction.as_view()),
-    path('send_transaction/', transactionrequests.SendTransaction.as_view())
+    path('send_transaction/', transactionrequests.SendTransaction.as_view()),
+
+    path('receive_block/', blockrequests.ReceiveBlock.as_view()),
+    path('send_block/', blockrequests.SendBlock.as_view())
 ]

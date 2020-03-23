@@ -7,7 +7,7 @@ from django.views import View
 
 from .transaction import Transaction
 from .block import Block
-from . import state, nbcsettings, broadcast
+from . import state, nbcsettings, broadcast, miner
 
 class ReceiveTransaction(View):
     '''
@@ -18,6 +18,7 @@ class ReceiveTransaction(View):
         res, t = Transaction.validate_transaction(tx_json)
 
         #miner here
+        miner.check()
         if res == True:
             status = 200
         else:
@@ -42,6 +43,6 @@ class SendTransaction(View):
             'transaction': res.dump_sendable()
         })
 
-        #miner needs to go off
+        miner.check()
 
         return HttpResponse()
