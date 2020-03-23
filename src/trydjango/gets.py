@@ -126,3 +126,25 @@ class GetParticipants(View):
         return JsonResponse({
             'participants': json.dumps(state.participants)
         })
+
+class GetAllTransactions(View):
+    def get(self, request):
+        blocks = []
+        for block in state.blockchain:
+            txs = []
+            for tx_json in block.transactions:
+                tx = Transaction(**json.loads(tx_json))
+
+                txs.append({
+                    'sender_id': state.participants[tx.sender]['id'],
+                    'receiver_id': state.participants[tx.receiver]['id'],
+                    'id': tx.id,
+                    'amount': tx.amount
+                })
+            blocks.append({
+                'index': block.index,
+                'transactions': txs,
+                'hash': block.current_hash,
+                'prev': block.previous_hash
+            })
+        return JsonResponse({'blocks': blocks})
