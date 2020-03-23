@@ -5,7 +5,7 @@ import requests
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views import View
 
-from . import nbcsettings, state, keygenerator
+from . import nbcsettings, state, keygenerator, broadcast
 from .block import Block
 from .transaction import Transaction
 
@@ -96,6 +96,9 @@ class ConnectParticipant(View):
                     return HttpResponseBadRequest()
 
                 #this needs to be broadcasted to everyone
+                #broadcast.broadcast()
+            
+            #miner should start here
 
         return HttpResponse()
 
