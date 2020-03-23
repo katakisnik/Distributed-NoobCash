@@ -28,7 +28,7 @@ class ReceiveBlock(View):
 
         return HttpResponse(res)
 
-class SendBlock(view):
+class SendBlock(View):
     def post(self, request):
         transactions = json.loads(request.POST.get('transactions'))
         nonce = int(request.POST.get('nonce'))
