@@ -96,7 +96,9 @@ class ConnectParticipant(View):
                     return HttpResponseBadRequest()
 
                 #this needs to be broadcasted to everyone
-                #broadcast.broadcast()
+                broadcast.broadcast('receive_transaction', {
+                    'transaction': transaction.dump_sendable()
+                })
             
             #miner should start here
 
