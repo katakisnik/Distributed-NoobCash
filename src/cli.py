@@ -41,3 +41,20 @@ else:
     except Exception as e:
         print('failed')
         exit(1)
+
+while True:
+    cmd = input("> ")
+    print(cmd)
+
+    if cmd == 'view':
+        # print list of transaction from all blocks
+        api = f'{host}/get_transactions/'
+        blocks = requests.get(api).json()['blocks']
+        for b in blocks:
+            print(f'\nBlock {b["index"]}: (SHA: {b["hash"][:15]}\tPREV: {b["prev"][:15]})')
+
+            for tx in b['transactions']:
+                print(f'{tx["sender_id"]}\t->\t{tx["recepient_id"]}\t{tx["amount"]}\tNBC\t{tx["id"][:10]}')
+    
+    elif cmd == 'exit':
+        exit(0)
