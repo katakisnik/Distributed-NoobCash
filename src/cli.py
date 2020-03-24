@@ -1,6 +1,9 @@
+"""Implements a basic client """
+import sys
+import os
 import requests
 import argparse
-import sys
+from trydjango.nbcsettings import SOURCE_INPUTS_PATH
 
 # BASE_DIR = os.path.dirname(__file__)
 # sys.path.append(BASE_DIR)
@@ -55,6 +58,28 @@ while True:
 
             for tx in b['transactions']:
                 print(f'{tx["sender_id"]}\t->\t{tx["receiver_id"]}\t{tx["amount"]}\tNBC\t{tx["id"][:10]}')
-    
+
     elif cmd == 'exit':
         exit(0)
+
+    elif cmd == 'source':
+        # Read input from source file
+        FOLDER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                   SOURCE_INPUTS_PATH)
+        for p in range(participants):
+            filename = 'transactions' + str(p) + '.txt'
+            file = os.path.join(FOLDER_PATH, filename)
+            with open(file, mode='r') as src:
+                # data = [transaction0, transaction1, ....  , transaction_n]
+                data = [line.replace('\n', '') for line in src.readlines()
+                        if line[0] != '#']
+                transactions = [t.split(' ') for t in data]
+                # Now create API for each transaction
+                for receiver_id, amount in transactions:
+
+                    # Create transaction dictionary
+                    transaction = dict(receiver=receiver_id,
+                                       amount=amount,
+                                       token='0')
+                    # Send post request
+                    requests.post(host + '/send_block/', transaction)

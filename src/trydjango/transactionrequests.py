@@ -34,9 +34,9 @@ class SendTransaction(View):
         amount = request.POST.get('amount')
         token = request.POST.get('token')
 
-        #?checkarisma me token?
+        # ?checkarisma me token?
         res = Transaction.create_transaction(receiver, amount)
-        if res == None:
+        if res is None:
             return HttpResponseBadRequest('invalid transaction')
 
         broadcast.broadcast('receive_transaction', {
