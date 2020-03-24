@@ -11,7 +11,7 @@ from . import nbcsettings, state, broadcast
 from .block import Block
 
 def check():
-    if len(state.transactions) == nbcsettings.BLOCK_CAPACITY:
+    if len(state.transactions) >= nbcsettings.BLOCK_CAPACITY:
         if (start_mine()):
             return True
         else:
