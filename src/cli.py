@@ -1,6 +1,7 @@
 import requests
 import argparse
 import sys
+import json
 
 # BASE_DIR = os.path.dirname(__file__)
 # sys.path.append(BASE_DIR)
@@ -55,6 +56,12 @@ while True:
 
             for tx in b['transactions']:
                 print(f'{tx["sender_id"]}\t->\t{tx["receiver_id"]}\t{tx["amount"]}\tNBC\t{tx["id"][:10]}')
+
+    if cmd == 'balance':
+        api = f'{host}/get_balance/'
+        balance = requests.get(api).json
+        for id, p in balance.items():
+            print(f'{id}\t({p["publickey"]})\t{p["host"]}\t{p["amount"]}\tNBC')
     
     elif cmd == 'exit':
         exit(0)

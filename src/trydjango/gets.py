@@ -127,6 +127,7 @@ class GetParticipants(View):
             'participants': json.dumps(state.participants)
         })
 
+#class the practically returns the whole blockchain
 class GetAllTransactions(View):
     def get(self, request):
         blocks = []
@@ -148,3 +149,15 @@ class GetAllTransactions(View):
                 'prev': block.previous_hash
             })
         return JsonResponse({'blocks': blocks})
+
+#return for each participant the amount of nbc they have
+class GetBalance(view):
+    def get(self, request):
+        result = {}
+        for publickey in state.participants:
+            result[state.participants[publickey]['id']] = {
+                'host': state.participants[publickey]['host'],
+                'publickey': publickey,
+                'amount': sum(x['amount'] for x in state.valid_utxos[publickey])
+            }
+        return JsonResponse(result)
