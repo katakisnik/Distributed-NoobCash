@@ -69,27 +69,28 @@ while True:
     if cmd == 'exit':
         sys.exit(0)
 
-    if cmd == 'source':
+    if cmd.startswith('source'):
+        p = cmd.split(' ')[1]
         FOLDER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                    SOURCE_INPUTS_PATH)
         # API call to get list of {host,pubkey,amount} per participant
         balance = requests.get(f'{host}/get_balance/').json
         # Read input from source file
-        for p in range(participants):
-            filename = 'transactions' + str(p) + '.txt'
-            file = os.path.join(FOLDER_PATH, filename)
-            with open(file, mode='r') as src:
-                # data = [transaction0, transaction1, ....  , transaction_n]
-                data = [line.replace('\n', '') for line in src.readlines()
-                        if line[0] != '#']
-                transactions = [t.split(' ') for t in data]
-                # Now create API for each transaction
-                for receiver_id, amount in transactions:
 
-                    # Create transaction dictionary
-                    receiver_pubkey = balance[receiver_id]['publickey']
-                    transaction = dict(receiver=receiver_pubkey,
-                                       amount=amount,
-                                       token='0')
-                    # Send post request
-                    requests.post(host + '/send_block/', transaction)
+        filename = 'transactions' + str(p) + '.txt'
+        file = os.path.join(FOLDER_PATH, filename)
+        with open(file, mode='r') as src:
+            # data = [transaction0, transaction1, ....  , transaction_n]
+            data = [line.replace('\n', '') for line in src.readlines()
+                    if line[0] != '#']
+            transactions = [t.split(' ') for t in data]
+            # Now create API for each transaction
+            for receiver_id, amount in transactions:
+
+                # Create transaction dictionary
+                receiver_pubkey = balance[receiver_id]['publickey']
+                transaction = dict(receiver=receiver_pubkey,
+                                   amount=amount,
+                                   token='0')
+                # Send post request
+                requests.post(host + '/send_block/', transaction)
