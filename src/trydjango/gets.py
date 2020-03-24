@@ -11,8 +11,8 @@ from .transaction import Transaction
 
 class GetSetting(View):
     def get(self, request):
-        
-            
+
+
         return JsonResponse({
             'blockchain': json.dumps(nbcsettings.DIFFICULTY)
         })
@@ -99,7 +99,7 @@ class ConnectParticipant(View):
                 broadcast.broadcast('receive_transaction', {
                     'transaction': transaction.dump_sendable()
                 })
-            
+
             #miner should start here
 
         return HttpResponse()
@@ -152,6 +152,10 @@ class GetAllTransactions(View):
 
 #return for each participant the amount of nbc they have
 class GetBalance(view):
+    """
+    A method to return a list of {host,pubkey,amount}
+    for each participant.
+    """
     def get(self, request):
         result = {}
         for publickey in state.participants:
