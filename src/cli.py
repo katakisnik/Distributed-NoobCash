@@ -3,7 +3,10 @@ import sys
 import os
 import requests
 import argparse
+
 from trydjango.nbcsettings import SOURCE_INPUTS_PATH
+import sys
+import json 
 
 # BASE_DIR = os.path.dirname(__file__)
 # sys.path.append(BASE_DIR)
@@ -59,10 +62,16 @@ while True:
             for tx in b['transactions']:
                 print(f'{tx["sender_id"]}\t->\t{tx["receiver_id"]}\t{tx["amount"]}\tNBC\t{tx["id"][:10]}')
 
-    elif cmd == 'exit':
+    if cmd == 'balance':
+        api = f'{host}/get_balance/'
+        balance = requests.get(api).json
+        for id, p in balance.items():
+            print(f'{id}\t({p["publickey"]})\t{p["host"]}\t{p["amount"]}\tNBC')
+
+    if cmd == 'exit':
         exit(0)
 
-    elif cmd == 'source':
+    if cmd == 'source':
         # Read input from source file
         FOLDER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                    SOURCE_INPUTS_PATH)
