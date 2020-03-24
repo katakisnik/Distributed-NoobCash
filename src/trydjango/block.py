@@ -65,6 +65,9 @@ class Block(object):
     @staticmethod
     def create_block(transactions, nonce, newhash, timestamp):
         try:
+            TRANSACTIONS_BACKUP = copy.deepcopy(state.transactions)
+            UTXOS_BACKUP = copy.deepcopy(state.utxos)
+            VALID_UTXOS_BACKUP = copy.deepcopy(state.valid_utxos)
             block = Block(
                 transactions = copy.deepcopy(transactions),
                 nonce = nonce,
@@ -100,9 +103,17 @@ class Block(object):
             state.blockchain.append(block)
             state.valid_utxos = copy.deepcopy(state.utxos)
 
+            for tx in TRANSACTIONS_BACKUP:
+                tx_json_string = tx.dump_sendable()
+                if tx_json_string not in transactions:
+                    status, t = Transaction.validate_transaction(tx_json_string)
+
             return block
 
         except Exception as e:
+            state.transactions = TRANSACTIONS_BACKUP
+            state.utxos = UTXOS_BACKUP
+            state.valid_utxos = VALID_UTXOS_BACKUP
             print(e)
 
     @staticmethod
@@ -172,6 +183,10 @@ class Block(object):
 
                 state.blockchain.append(new_block)
                 state.valid_utxos = copy.deepcopy(state.utxos)
+                for tx in TRANSACTIONS_BACKUP:
+                    tx_json = tx.dump_sendable()
+                    if tx_json not in new_block.transactions:
+                        status, tx = Transaction.validate_transaction(tx_json)
 
                 return 'good'
 
