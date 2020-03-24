@@ -113,7 +113,7 @@ class Transaction(object):
             sender = state.publickey
             sender_utxos = copy.deepcopy(state.utxos[sender])
             receiver_utxos = copy.deepcopy(state.utxos[receiver])
-
+            amount = int(amount)
             # id for each transaction that led to the money that are being transfered
             inputs = []
             for tr in sender_utxos:
