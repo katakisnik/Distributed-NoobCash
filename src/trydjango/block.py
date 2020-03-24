@@ -70,7 +70,7 @@ class Block(object):
             UTXOS_BACKUP = copy.deepcopy(state.utxos)
             VALID_UTXOS_BACKUP = copy.deepcopy(state.valid_utxos)
             block = Block(
-                transactions = copy.deepcopy(transactions),
+                transactions = copy.deepcopy(transactions[:nbcsettings.BLOCK_CAPACITY]),
                 nonce = nonce,
                 current_hash = newhash,
                 previous_hash = state.blockchain[-1].current_hash,
