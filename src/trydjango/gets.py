@@ -151,7 +151,7 @@ class GetAllTransactions(View):
         return JsonResponse({'blocks': blocks})
 
 #return for each participant the amount of nbc they have
-class GetBalance(view):
+class GetBalance(View):
     """
     A method to return a list of {host,pubkey,amount}
     for each participant.
