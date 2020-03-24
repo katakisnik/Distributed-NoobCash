@@ -1,7 +1,7 @@
 import datetime
 import copy
 import json
-from . import state, nbcsettings, miner
+from . import state, nbcsettings
 from .transaction import Transaction
 from threading import Thread
 
@@ -109,9 +109,6 @@ class Block(object):
                 if tx_json_string not in transactions:
                     status, t = Transaction.validate_transaction(tx_json_string)
             
-            t = Thread(target=miner.check)
-            t.start()
-
             return block
 
         except Exception as e:
@@ -191,9 +188,6 @@ class Block(object):
                     tx_json = tx.dump_sendable()
                     if tx_json not in new_block.transactions:
                         status, tx = Transaction.validate_transaction(tx_json)
-
-                t = Thread(target=miner.check)
-                t.start()
 
                 return 'good'
 

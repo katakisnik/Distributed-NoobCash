@@ -6,7 +6,8 @@ from django.views import View
 
 from .transaction import Transaction
 from .block import Block
-from . import state, nbcsettings, broadcast
+from . import state, nbcsettings, broadcast, miner
+from threading import Thread
 
 class ReceiveBlock(View):
     def post(self, request):
@@ -25,6 +26,9 @@ class ReceiveBlock(View):
         
         if res == 'dropped':
             print('block dropped')
+        
+        t = Thread(target=miner.check)
+        t.start()
 
         return HttpResponse(res)
 
@@ -46,5 +50,8 @@ class SendBlock(View):
         broadcast.broadcast('receive_block', {
             'block': res.dump_sendable()
         })
+
+        t = Thread(target=miner.check)
+        t.start()
 
         return HttpResponse()
