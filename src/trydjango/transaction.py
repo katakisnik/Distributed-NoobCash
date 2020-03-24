@@ -113,7 +113,7 @@ class Transaction(object):
             sender = state.publickey
             sender_utxos = copy.deepcopy(state.utxos[sender])
             receiver_utxos = copy.deepcopy(state.utxos[receiver])
-            amount = int(amount)
+
             # id for each transaction that led to the money that are being transfered
             inputs = []
             for tr in sender_utxos:
@@ -179,6 +179,13 @@ class Transaction(object):
 
     @staticmethod
     def validate_transaction(transaction_json):
+        """
+        Returns if a transaction is valid.
+        Computes again the transaction from the machines state (perspective)
+        and through this process, checks if user utxos where these that where
+        discribed in the input. The new state of the machine computed by
+        it if the transaction is valid.
+        """
         try:
             t = Transaction(**json.loads(transaction_json))
 

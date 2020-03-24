@@ -85,16 +85,6 @@ class Block(object):
             if not block.current_hash.startswith('0'*nbcsettings.DIFFICULTY):
                 raise Exception('invalid proof of work')
 
-            #we are starting from the utxos of the last block
-            state.utxos = copy.deepcopy(state.valid_utxos)
-            state.transactions = []
-
-            for tx in transactions:
-                #needs to be implemented
-                result, transaction = Transaction.validate_transaction(tx)
-                if result == False:
-                    raise Exception('invalid transaction')
-
             state.transactions = []
 
             #block added to blockchain
@@ -105,7 +95,7 @@ class Block(object):
 
         except Exception as e:
             print(e)
-            
+
     @staticmethod
     def create_genesis_block(num_participants):
         try:
@@ -135,7 +125,7 @@ class Block(object):
             state.genesis_utxos = copy.deepcopy(state.utxos)
             print('everything fine')
             return True
-        
+
         except Exception as e:
             print(e)
 
@@ -168,13 +158,13 @@ class Block(object):
                     result, transaction = Transaction.validate_transaction(tx)
                     if result == False:
                         raise Exception('invalid transaction')
-                    #remove transaction after validating    
+                    #remove transaction after validating
                     state.transactions.remove(transaction)
 
                 state.blockchain.append(new_block)
                 state.valid_utxos = copy.deepcopy(state.utxos)
 
-                return 'good'    
+                return 'good'
 
             else:
                 for block in state.blockchain[:-1]:
@@ -183,7 +173,7 @@ class Block(object):
                         return 'dropped'
                 #unkown block
                 return 'consensus'
-        
+
         except Exception as e:
             #restore state
             state.transactions = TRANSACTIONS_BACKUP
