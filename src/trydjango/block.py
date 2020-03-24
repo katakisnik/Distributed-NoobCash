@@ -85,6 +85,15 @@ class Block(object):
             if not block.current_hash.startswith('0'*nbcsettings.DIFFICULTY):
                 raise Exception('invalid proof of work')
 
+            # start from utxos of last block
+            state.utxos = copy.deepcopy(state.valid_utxos)
+            state.transactions = []
+
+            for tx_json_string in transactions:
+                status, t = Transaction.validate_transaction(tx_json_string)
+                if status != True:
+                    raise Exception('transaction already exists')
+
             state.transactions = []
 
             #block added to blockchain
