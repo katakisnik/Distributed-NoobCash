@@ -20,6 +20,7 @@ class ReceiveBlock(View):
         
         if res == 'consensus':
             print('we need consensus')
+            res = consensus.consensus()
         
         if res == 'good':
             print('block is good')
