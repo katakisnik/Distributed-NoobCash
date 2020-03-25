@@ -151,7 +151,7 @@ class Block(object):
             print(e)
 
     @staticmethod
-    def validate_block(block_json):
+    def validate_block(block_json, update = True):
         try:
             # save state, in order to properly restore in case of a bad block
             TRANSACTIONS_BACKUP = copy.deepcopy(state.transactions)
@@ -182,7 +182,8 @@ class Block(object):
                     #remove transaction after validating
                     state.transactions.remove(transaction)
 
-                state.blockchain.append(new_block)
+                if update == True:
+                    state.blockchain.append(new_block)
                 state.valid_utxos = copy.deepcopy(state.utxos)
                 for tx in TRANSACTIONS_BACKUP:
                     tx_json = tx.dump_sendable()

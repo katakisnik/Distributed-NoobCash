@@ -165,3 +165,10 @@ class GetBalance(View):
                 'amount': sum(x['amount'] for x in state.valid_utxos[publickey])
             }
         return JsonResponse(result)
+
+#return the entire blockchain
+class GetBlockchain(View):
+    def get(self, request):
+        return JsonResponse({
+            'blockchain': json.dumps(state.blockchain)
+        })

@@ -35,5 +35,7 @@ urlpatterns = [
     path('send_block/', blockrequests.SendBlock.as_view()),
 
     path('get_transactions/', gets.GetAllTransactions.as_view()),
-    path('get_balance/', gets.GetBalance.as_view())
+    path('get_balance/', gets.GetBalance.as_view()),
+
+    path('get_blockchain/', gets.GetBlockchain.as_view())
 ]

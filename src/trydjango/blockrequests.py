@@ -6,7 +6,7 @@ from django.views import View
 
 from .transaction import Transaction
 from .block import Block
-from . import state, nbcsettings, broadcast, miner
+from . import state, nbcsettings, broadcast, miner, consensus
 from threading import Thread
 
 class ReceiveBlock(View):
