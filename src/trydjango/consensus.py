@@ -18,7 +18,7 @@ def validate_chain(blockchain, pending):
     for block in blockchain:
         # `Block.validate_block()` will also update any pending transactions
         # with conflicting inputs
-        res = Block.validate_block(block, update=False)
+        res = Block.validate_block(block, update=True)
         if res != 'good':
             return False
     
@@ -59,12 +59,19 @@ def consensus():
         if not validate_chain(received_blockchain[1:], TRANSACTIONS_BACKUP):
             print('invalid blockchain')
             continue
+
+        MAX_BLOCKCHAIN = copy.deepcopy(state.blockchain)
+        MAX_TRANSACTIONS = copy.deepcopy(state.transactions)
+        MAX_UTXOS = copy.deepcopy(state.utxos)
+        MAX_VALID_UTXOS = copy.deepcopy(state.valid_utxos)
+        MAX_LENGTH = len(MAX_BLOCKCHAIN)
+        TRANSACTIONS_BACKUP = copy.deepcopy(state.transactions)
         
-        # update with best blockchain found
-        state.blockchain = MAX_BLOCKCHAIN
-        state.transactions = MAX_TRANSACTIONS
-        state.utxos = MAX_UTXOS
-        state.valid_utxos = MAX_VALID_UTXOS
+    # update with best blockchain found
+    state.blockchain = MAX_BLOCKCHAIN
+    state.transactions = MAX_TRANSACTIONS
+    state.utxos = MAX_UTXOS
+    state.valid_utxos = MAX_VALID_UTXOS
 
         
 
