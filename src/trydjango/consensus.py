@@ -50,7 +50,6 @@ def consensus():
             raise Exception('invalid blockchain response')
 
         received_blockchain = json.loads(response.json()['blockchain'])
-        print(received_blockchain)
 
         if len(received_blockchain) < MAX_LENGTH:
             print(f'{pid}. Sorry smaller chain')

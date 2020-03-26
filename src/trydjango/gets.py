@@ -117,6 +117,8 @@ class AcceptParticipant(View):
         state.utxos = copy.deepcopy(genesis_utxos)
         state.blockchain = [Block(**json.loads(genesis_block), index=0)]
         state.valid_utxos = copy.deepcopy(state.utxos)
+        state.genesis_block = genesis_block
+        state.genesis_utxos = genesis_utxos
 
         return HttpResponse()
 
