@@ -170,5 +170,5 @@ class GetBalance(View):
 class GetBlockchain(View):
     def get(self, request):
         return JsonResponse({
-            'blockchain': json.dumps(state.blockchain)
+            'blockchain': json.dumps([b.dump_sendable() for b in state.blockchain])
         })
