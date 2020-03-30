@@ -29,11 +29,6 @@ class ReceiveBlock(View):
         if res == 'dropped':
             print('block dropped')
 
-        f = open('log.txt', 'a+')
-        current_time = datetime.now()
-        f.write(f'Block created at {current_time}\n')
-        f.close()
-
         t = Thread(target=miner.check)
         t.start()
 
@@ -58,10 +53,6 @@ class SendBlock(View):
             'block': res.dump_sendable()
         })
 
-        f = open('log.txt', 'a+')
-        current_time = datetime.now()
-        f.write(f'Block created at {current_time}\n')
-        f.close()
 
         t = Thread(target=miner.check)
         t.start()
