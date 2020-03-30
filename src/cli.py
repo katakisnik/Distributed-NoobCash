@@ -85,6 +85,7 @@ while True:
         # Read input from source file
         filename = 'transactions' + str(p) + '.txt'
         file = os.path.join(FOLDER_PATH, filename)
+        init_time = True
         with open(file, mode='r') as src:
             # data = [transaction0, transaction1, ....  , transaction_n]
             data = [line.replace('\n', '') for line in src.readlines()
@@ -92,9 +93,11 @@ while True:
             transactions = [t.split(' ') for t in data if len(t) != 0]
 
             # Init time
-            with open('log.txt', mode='a+') as f:
-                current_time = datetime.datetime.now()
-                f.write(f'Block created at {current_time}\n')
+            if init_time is True:
+                with open('log.txt', mode='w') as f:
+                    current_time = datetime.datetime.now()
+                    f.write(f'Block created at {current_time}\n')
+                    init_time = False
 
             # Now create API for each transaction
             for receiver_id, amount in transactions:
