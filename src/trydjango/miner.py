@@ -7,7 +7,7 @@ from random import randint
 from subprocess import Popen
 from signal import SIGTERM
 from Crypto.Hash import SHA384
-from . import nbcsettings, state, broadcast
+from . import nbcsettings, state, broadcast, consensus
 from .block import Block
 
 def check():
@@ -20,7 +20,7 @@ def check():
         return False
 
 def start_mine():
-    transactions = [tx.dump_sendable() for tx in state.transactions]
+    transactions = state.transactions
     b = {}
     b['transactions'] = transactions
     nonce = randint(0, nbcsettings.RAND)
@@ -39,6 +39,6 @@ def start_mine():
             broadcast.broadcast('receive_block', {
                 'block': res.dump_sendable()
             })
-
+            consensus.consensus()
             return True
         nonce = randint(0, nbcsettings.RAND)

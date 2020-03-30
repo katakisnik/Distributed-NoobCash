@@ -67,10 +67,11 @@ class Block(object):
     def create_block(transactions, nonce, newhash, timestamp):
         try:
             TRANSACTIONS_BACKUP = copy.deepcopy(state.transactions)
+            transactionstocheck = [tx.dump_sendable() for tx in transactions]
             UTXOS_BACKUP = copy.deepcopy(state.utxos)
             VALID_UTXOS_BACKUP = copy.deepcopy(state.valid_utxos)
             block = Block(
-                transactions = copy.deepcopy(transactions[:nbcsettings.BLOCK_CAPACITY]),
+                transactions = copy.deepcopy(transactionstocheck[:nbcsettings.BLOCK_CAPACITY]),
                 nonce = nonce,
                 current_hash = newhash,
                 previous_hash = state.blockchain[-1].current_hash,
@@ -93,10 +94,11 @@ class Block(object):
             state.utxos = copy.deepcopy(state.valid_utxos)
             state.transactions = []
 
-            for tx_json_string in transactions:
+            for tx in transactions:
+                tx_json_string = tx.dump_sendable()
                 status, t = Transaction.validate_transaction(tx_json_string)
                 if status != True:
-                    TRANSACTIONS_BACKUP.remove(Transaction(**json.loads(tx_json_string)))
+                    TRANSACTIONS_BACKUP.remove(tx)
                     raise Exception('transaction already exists')
 
             state.transactions = []

@@ -28,7 +28,7 @@ class ReceiveBlock(View):
 
         if res == 'dropped':
             print('block dropped')
-
+        
         t = Thread(target=miner.check)
         t.start()
 
@@ -52,7 +52,6 @@ class SendBlock(View):
         broadcast.broadcast('receive_block', {
             'block': res.dump_sendable()
         })
-        consensus.consensus()
 
         t = Thread(target=miner.check)
         t.start()
