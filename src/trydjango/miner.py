@@ -20,7 +20,7 @@ def check():
         return False
 
 def start_mine():
-    transactions = state.transactions
+    transactions = [tx.dump_sendable() for tx in state.transactions]
     b = {}
     b['transactions'] = transactions
     nonce = randint(0, nbcsettings.RAND)
@@ -30,7 +30,7 @@ def start_mine():
         b_json = json.dumps(b, sort_keys=True)
         sha = SHA384.new(b_json.encode()).hexdigest()
         if sha.startswith('0' * nbcsettings.DIFFICULTY):
-            res = Block.create_block(b['transactions'], b['nonce'], sha, b['timestamp'])
+            res = Block.create_block(state.transactions, b['nonce'], sha, b['timestamp'])
         #3ana3ekinaei?
             if res is None:
                 print('block creation failed')
