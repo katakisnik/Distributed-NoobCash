@@ -2,10 +2,10 @@
 # Python settings
 PYTHON_VERSION = 'python3.7'
 
-BLOCK_CAPACITY = 4
+BLOCK_CAPACITY = 5
 
 # Blockchain settings
-DIFFICULTY = 3
+DIFFICULTY = 4
 
 RAND = 1000000
 

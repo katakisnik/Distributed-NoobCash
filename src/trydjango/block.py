@@ -96,6 +96,7 @@ class Block(object):
             for tx_json_string in transactions:
                 status, t = Transaction.validate_transaction(tx_json_string)
                 if status != True:
+                    TRANSACTIONS_BACKUP.remove(Transaction(**json.loads(tx_json_string)))
                     raise Exception('transaction already exists')
 
             state.transactions = []

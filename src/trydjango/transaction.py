@@ -238,4 +238,4 @@ class Transaction(object):
 
         except Exception as e:
             print(e)
-            return False, None
+            return False, t

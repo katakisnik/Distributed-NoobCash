@@ -52,7 +52,7 @@ class SendBlock(View):
         broadcast.broadcast('receive_block', {
             'block': res.dump_sendable()
         })
-
+        consensus.consensus()
 
         t = Thread(target=miner.check)
         t.start()
