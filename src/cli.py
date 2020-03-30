@@ -3,6 +3,7 @@ import sys
 import os
 import argparse
 import requests
+import datetime
 
 from trydjango.nbcsettings import SOURCE_INPUTS_PATH
 
@@ -55,6 +56,12 @@ while True:
         api = f'{host}/get_transactions/'
         blocks = requests.get(api).json()['blocks']
         for b in blocks:
+            if b == blocks[-1]:
+                # Write final time
+                with open('log.txt', mode='a+') as f:
+                    current_time = b['timestamp']
+                    f.write(f'Final block at {current_time}\n')
+
             print(f'\nBlock {b["index"]}: (SHA: {b["hash"]}\tPREV: {b["prev"]})')
 
             for tx in b['transactions']:
@@ -83,6 +90,12 @@ while True:
             data = [line.replace('\n', '') for line in src.readlines()
                     if line[0] != '#']
             transactions = [t.split(' ') for t in data if len(t) != 0]
+
+            # Init time
+            with open('log.txt', mode='a+') as f:
+                current_time = datetime.datetime.now()
+                f.write(f'Block created at {current_time}\n')
+
             # Now create API for each transaction
             for receiver_id, amount in transactions:
                     # Create transaction dictionary

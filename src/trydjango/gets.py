@@ -148,7 +148,8 @@ class GetAllTransactions(View):
                 'index': block.index,
                 'transactions': txs,
                 'hash': block.current_hash,
-                'prev': block.previous_hash
+                'prev': block.previous_hash,
+                'timestamp': block.timestamp
             })
         return JsonResponse({'blocks': blocks})
 
