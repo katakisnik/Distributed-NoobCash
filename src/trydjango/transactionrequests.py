@@ -8,7 +8,6 @@ from django.views import View
 from .transaction import Transaction
 from .block import Block
 from . import state, nbcsettings, broadcast, miner
-from threading import Thread
 
 class ReceiveTransaction(View):
     '''
@@ -18,10 +17,8 @@ class ReceiveTransaction(View):
         tx_json = request.POST.get('transaction')
         res, t = Transaction.validate_transaction(tx_json)
 
-        # Create a thread
-        if state.MINER_RUNNING is False:
-            t = Thread(target=miner.check)
-            t.start()
+        # Start miner
+        miner.check()
 
         # Validate response
         if res is True:
@@ -48,9 +45,7 @@ class SendTransaction(View):
             'transaction': res.dump_sendable()
         })
 
-        # Create a thread
-        if state.MINER_RUNNING is False:
-            t = Thread(target=miner.check)
-            t.start()
+        # Start miner
+        miner.check()
 
         return HttpResponse()

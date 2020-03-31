@@ -15,7 +15,7 @@ class ReceiveBlock(View):
         block_json = request.POST.get('block')
 
         # Stop miner
-        state.thread_running._stop()
+        miner._stop()
 
         res = Block.validate_block(block_json)
         if res == 'error':
@@ -31,10 +31,8 @@ class ReceiveBlock(View):
         if res == 'dropped':
             print('block dropped')
 
-        # Create a thread
-        if state.MINER_RUNNING is False:
-            t = Thread(target=miner.check)
-            t.start()
+        # Start miner
+        miner.check()
 
         return HttpResponse(res)
 
@@ -43,11 +41,11 @@ class SendBlock(View):
         transactions = json.loads(request.POST.get('transactions'))
         nonce = int(request.POST.get('nonce'))
         sha = request.POST.get('sha')
-        token = request.POST.get('token')
+        # token = request.POST.get('token')
         timestamp = request.POST.get('timestamp')
 
         # Stop miner
-        state.thread_running._stop()
+        miner.stop()
 
         res = Block.create_block(transactions, nonce, sha, timestamp)
 
@@ -58,9 +56,7 @@ class SendBlock(View):
             'block': res.dump_sendable()
         })
 
-        # Create a thread
-        if state.MINER_RUNNING is False:
-            t = Thread(target=miner.check)
-            t.start()
+        # Start miner
+        miner.check()
 
         return HttpResponse()

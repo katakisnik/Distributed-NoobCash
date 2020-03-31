@@ -61,7 +61,7 @@ class Block(object):
             previous_hash=self.previous_hash
         )
 
-    #create a block, the miner has found nonce for the list of transactions
+    # Create a block, the miner has found nonce for the list of transactions
     @staticmethod
     def create_block(transactions, nonce, newhash, timestamp):
         """
@@ -71,7 +71,7 @@ class Block(object):
         try:
             # Create transactions backups
             TRANSACTIONS_BACKUP = copy.deepcopy(state.transactions)
-            transactionstocheck = [tx.dump_sendable() for tx in transactions]
+            transactionstocheck = transactions
             UTXOS_BACKUP = copy.deepcopy(state.utxos)
             VALID_UTXOS_BACKUP = copy.deepcopy(state.valid_utxos)
 
@@ -102,10 +102,8 @@ class Block(object):
             # we should remove it from the backup so that we will not check it
             # again in the future
             for tx in transactions:
-                tx_json_string = tx.dump_sendable()
-                status, t = Transaction.validate_transaction(tx_json_string)
-                if status != True:
-                    TRANSACTIONS_BACKUP.remove(tx)
+                status, t = Transaction.validate_transaction(tx)
+                if status is not True:
                     raise Exception('transaction already exists')
 
             state.transactions = []
@@ -115,9 +113,8 @@ class Block(object):
             state.valid_utxos = copy.deepcopy(state.utxos)
 
             for tx in TRANSACTIONS_BACKUP:
-                tx_json_string = tx.dump_sendable()
-                if tx_json_string not in transactions:
-                    status, t = Transaction.validate_transaction(tx_json_string)
+                if tx not in transactions:
+                    status, t = Transaction.validate_transaction(tx)
 
             return block
 
