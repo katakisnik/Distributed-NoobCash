@@ -1,4 +1,5 @@
 """Global variables for each state of our application."""
+from threading import RLock
 
 # list of validated blocks
 blockchain = []
@@ -35,5 +36,7 @@ genesis_utxos = []
 # token for transaction authentication
 token = None
 
-# Miner running bool
+# Threads
+thread_running = None
 MINER_RUNNING = False
+lock = RLock()

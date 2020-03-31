@@ -4,28 +4,31 @@ import os
 import json
 import datetime
 from random import randint
-from subprocess import Popen
 from signal import SIGTERM
 from Crypto.Hash import SHA384
 from . import nbcsettings, state, broadcast, consensus
 from .block import Block
+from threading import current_thread
 
 def check():
-    # Check block capacity is ok and also no miner has already started
-    if (len(state.transactions) >= nbcsettings.BLOCK_CAPACITY and
-        state.MINER_RUNNING is False):
-        # Get the miner so that no thread can run at the same time
-        state.MINER_RUNNING = True
-        if (start_mine()):
-            # Set miner available again
-            state.MINER_RUNNING = False
-            return True
+    # Lock so only this thread can change variables here.
+    with state.lock:
+        # Check block capacity is ok and also no miner has already started
+        if len(state.transactions) >= nbcsettings.BLOCK_CAPACITY:
+            # Get the miner so that no thread can run at the same time
+            state.MINER_RUNNING = True
+            # Save thread
+            state.thread_running = current_thread()
+            if (start_mine()):
+                # Set miner available again
+                state.MINER_RUNNING = False
+                return True
+            else:
+                # Set miner available again
+                state.MINER_RUNNING = False
+                return False
         else:
-            # Set miner available again
-            state.MINER_RUNNING = False
             return False
-    else:
-        return False
 
 def start_mine():
     transactions = [tx.dump_sendable() for tx in state.transactions]

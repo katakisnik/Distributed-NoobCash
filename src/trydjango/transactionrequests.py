@@ -17,11 +17,14 @@ class ReceiveTransaction(View):
     def post(self, request):
         tx_json = request.POST.get('transaction')
         res, t = Transaction.validate_transaction(tx_json)
+
         # Create a thread
-        t = Thread(target=miner.check)
-        t.start()
+        if state.MINER_RUNNING is False:
+            t = Thread(target=miner.check)
+            t.start()
+
         # Validate response
-        if res == True:
+        if res is True:
             status = 200
         else:
             status = 400
@@ -45,8 +48,9 @@ class SendTransaction(View):
             'transaction': res.dump_sendable()
         })
 
-        # miner.check()
-        t = Thread(target=miner.check)
-        t.start()
+        # Create a thread
+        if state.MINER_RUNNING is False:
+            t = Thread(target=miner.check)
+            t.start()
 
         return HttpResponse()

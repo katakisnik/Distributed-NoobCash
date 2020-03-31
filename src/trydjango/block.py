@@ -3,7 +3,6 @@ import copy
 import json
 from . import state, nbcsettings
 from .transaction import Transaction
-from threading import Thread
 
 from Crypto.Hash import SHA384
 
