@@ -8,8 +8,6 @@ import datetime
 from random import randint
 from signal import SIGTERM
 from Crypto.Hash import SHA384
-from . import nbcsettings, state, broadcast, consensus
-from .block import Block
 from subprocess import Popen
 
 
@@ -21,6 +19,7 @@ sys.path.append(BASE)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'trydjango.settings')
 django.setup()
 
+from trydjango import nbcsettings, state, broadcast, consensus
 ################################################################################
 
 def check():
