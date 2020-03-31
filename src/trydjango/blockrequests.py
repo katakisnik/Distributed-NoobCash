@@ -15,7 +15,7 @@ class ReceiveBlock(View):
         block_json = request.POST.get('block')
 
         # Stop miner
-        miner._stop()
+        miner.stop()
 
         res = Block.validate_block(block_json)
         if res == 'error':
