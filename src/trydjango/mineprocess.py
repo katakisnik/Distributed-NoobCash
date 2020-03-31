@@ -6,9 +6,6 @@ import requests
 
 from Crypto.Hash import SHA384
 
-if __name__ == '__main__':
-    """If we run main then start_mine should be initialized."""
-    start_mine(sys.argv[1], sys.argv[2], sys.argv[3])
 
 def start_mine(host, transactions, difficulty):
     """Find nonce and send API back to the main process."""
@@ -36,3 +33,8 @@ def start_mine(host, transactions, difficulty):
             exit(0)
         # Continue until you compute nonce
         nonce = randint(0, 1000000)
+
+
+        if __name__ == '__main__':
+            """If we run main then start_mine should be initialized."""
+            start_mine(sys.argv[1], sys.argv[2], sys.argv[3])
