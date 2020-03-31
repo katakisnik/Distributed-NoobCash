@@ -14,4 +14,4 @@ COORDINATOR_PORT = 8000
 
 CORDINATOR = f'http://192.168.1.5:{COORDINATOR_PORT}'
 
-SOURCE_INPUTS_PATH = 'source_files/inputs3/'
+SOURCE_INPUTS_PATH = 'source_files/5nodes/'
