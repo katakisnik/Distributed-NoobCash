@@ -89,7 +89,7 @@ def start():
         transactions = [tx.dump_sendable() for tx in state.transactions]
         # No miner has been started yet
         print('Starting miner')
-        proc = Popen(['python', 'mineprocess.py', host, json.dumps(transactions), nbcsettings.DIFFICULTY])
+        proc = Popen(['python', 'mineprocess.py', host, json.dumps(transactions), str(nbcsettings.DIFFICULTY)])
         state.miner_pid = proc.pid
         print(f'miner.start: {e.__class__.__name__}: {e}')
 
