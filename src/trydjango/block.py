@@ -113,8 +113,9 @@ class Block(object):
             state.valid_utxos = copy.deepcopy(state.utxos)
 
             for tx in TRANSACTIONS_BACKUP:
-                if tx not in transactions:
-                    status, t = Transaction.validate_transaction(tx)
+                tx_json = tx.dump_sendable()
+                if tx_json not in transactions:
+                    status, t = Transaction.validate_transaction(tx_json)
 
             return block
 
