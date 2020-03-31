@@ -39,6 +39,6 @@ def start_mine():
             broadcast.broadcast('receive_block', {
                 'block': res.dump_sendable()
             })
-            consensus.consensus()
+            #consensus.consensus()
             return True
         nonce = randint(0, nbcsettings.RAND)

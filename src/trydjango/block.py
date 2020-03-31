@@ -81,6 +81,7 @@ class Block(object):
 
             #check if the created block is valid
             if len(block.transactions) != nbcsettings.BLOCK_CAPACITY:
+                print(len(block.transactions))
                 raise Exception('invalid block capacity')
          #   print(block.current_hash)
           #  print('\n')
@@ -169,6 +170,7 @@ class Block(object):
            # if new_block.calculate_hash().hexdigest() != new_block.current_hash:
             #    raise Exception('invalid has')
             if len(new_block.transactions) != nbcsettings.BLOCK_CAPACITY:
+                print(len(new_block.transactions))
                 raise Exception('invalid block capacity')
             if not new_block.current_hash.startswith('0'*nbcsettings.DIFFICULTY):
                 raise Exception('invalid proof of work')
