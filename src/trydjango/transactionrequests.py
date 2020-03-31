@@ -17,11 +17,10 @@ class ReceiveTransaction(View):
     def post(self, request):
         tx_json = request.POST.get('transaction')
         res, t = Transaction.validate_transaction(tx_json)
-
-        #miner here
-        # miner.check()
+        # Create a thread
         t = Thread(target=miner.check)
         t.start()
+        # Validate response
         if res == True:
             status = 200
         else:

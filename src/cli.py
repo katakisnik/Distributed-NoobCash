@@ -88,9 +88,9 @@ while True:
         init_time = True
         with open(file, mode='r') as src:
             # data = [transaction0, transaction1, ....  , transaction_n]
-            data = [line.replace('\n', '') for line in src.readlines()
-                    if line[0] != '#']
-            transactions = [t.split(' ') for t in data if len(t) != 0]
+            data = [line.replace('\n', '') for line in src.readlines()]
+            transactions = [t.replace('id', '').split(' ') for t in data
+                            if len(t) != 0]
 
             # Init time
             if init_time is True:

@@ -12,10 +12,10 @@ participants = {}
 # number of participants
 num_participants = -1
 
-#participant_id = 0 -> coordinator
+# participant_id = 0 -> coordinator
 participant_id = -1
 
-#private and public key for each participant
+# private and public key for each participant
 publickey = None
 privatekey = None
 
@@ -32,5 +32,8 @@ miner_pid = None
 genesis_block = None
 genesis_utxos = []
 
-#token for transaction authentication
+# token for transaction authentication
 token = None
+
+# Miner running bool
+MINER_RUNNING = False

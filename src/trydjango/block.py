@@ -65,11 +65,18 @@ class Block(object):
     #create a block, the miner has found nonce for the list of transactions
     @staticmethod
     def create_block(transactions, nonce, newhash, timestamp):
+        """
+        This function creates a block and tries to insert it into the
+        blockchain. If an exception is raised, blockchain remains as it is.
+        """
         try:
+            # Create transactions backups
             TRANSACTIONS_BACKUP = copy.deepcopy(state.transactions)
             transactionstocheck = [tx.dump_sendable() for tx in transactions]
             UTXOS_BACKUP = copy.deepcopy(state.utxos)
             VALID_UTXOS_BACKUP = copy.deepcopy(state.valid_utxos)
+
+            # Create a block object
             block = Block(
                 transactions = copy.deepcopy(transactionstocheck[:nbcsettings.BLOCK_CAPACITY]),
                 nonce = nonce,
@@ -79,22 +86,22 @@ class Block(object):
                 timestamp = timestamp
             )
 
-            #check if the created block is valid
+            # Check created block's capacity
             if len(block.transactions) != nbcsettings.BLOCK_CAPACITY:
                 print(len(block.transactions))
                 raise Exception('invalid block capacity')
-         #   print(block.current_hash)
-          #  print('\n')
-           # print(block.calculate_hash().hexdigest())
-            #if block.current_hash != block.calculate_hash().hexdigest():
-         #       raise Exception('invalid hash')
+            # if block.current_hash != block.calculate_hash().hexdigest():
+            #       raise Exception('invalid hash')
+            # Check DIFFICULTY if correct
             if not block.current_hash.startswith('0'*nbcsettings.DIFFICULTY):
                 raise Exception('invalid proof of work')
 
-            # start from utxos of last block
+            # Start from utxos of last block
             state.utxos = copy.deepcopy(state.valid_utxos)
             state.transactions = []
-
+            # Validate each transaction. For each one that it is invalid
+            # we should remove it from the backup so that we will not check it
+            # again in the future
             for tx in transactions:
                 tx_json_string = tx.dump_sendable()
                 status, t = Transaction.validate_transaction(tx_json_string)
@@ -104,7 +111,7 @@ class Block(object):
 
             state.transactions = []
 
-            #block added to blockchain
+            # block added to blockchain
             state.blockchain.append(block)
             state.valid_utxos = copy.deepcopy(state.utxos)
 
@@ -112,7 +119,7 @@ class Block(object):
                 tx_json_string = tx.dump_sendable()
                 if tx_json_string not in transactions:
                     status, t = Transaction.validate_transaction(tx_json_string)
-            
+
             return block
 
         except Exception as e:

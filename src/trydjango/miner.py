@@ -11,10 +11,18 @@ from . import nbcsettings, state, broadcast, consensus
 from .block import Block
 
 def check():
-    if len(state.transactions) >= nbcsettings.BLOCK_CAPACITY:
+    # Check block capacity is ok and also no miner has already started
+    if (len(state.transactions) >= nbcsettings.BLOCK_CAPACITY and
+        state.MINER_RUNNING is False):
+        # Get the miner so that no thread can run at the same time
+        state.MINER_RUNNING = True
         if (start_mine()):
+            # Set miner available again
+            state.MINER_RUNNING = False
             return True
         else:
+            # Set miner available again
+            state.MINER_RUNNING = False
             return False
     else:
         return False
