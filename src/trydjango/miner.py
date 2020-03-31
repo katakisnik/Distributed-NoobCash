@@ -91,7 +91,7 @@ def start():
         print('Starting miner')
         FILE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                  'mineprocess.py')
-        proc = Popen(['python', FILE_PATH, host, json.dumps(transactions), str(nbcsettings.DIFFICULTY)])
+        proc = Popen(['python', FILE_PATH, host, json.dumps(transactions[:nbcsettings.BLOCK_CAPACITY]), str(nbcsettings.DIFFICULTY)])
         state.miner_pid = proc.pid
         print(f'miner.start: {e.__class__.__name__}: {e}')
 
