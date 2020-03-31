@@ -1,0 +1,7 @@
+For 5 participators:
+capacity 1, difficulty 4 -> 31.98 block/min
+capacity 5, difficulty 4 -> 27.42 block/min
+capacity 10, difficulty 4 -> 13.8 block/min
+capacity 1, difficulty 5 -> 4.97 block/min
+capacity 5, difficulty 5 -> 2.58 block/min
+capacity 10, difficulty 5 -> 1.8 block/min
