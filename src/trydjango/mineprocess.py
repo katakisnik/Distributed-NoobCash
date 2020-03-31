@@ -15,7 +15,7 @@ def start_mine(host, transactions, difficulty):
     nonce = randint(0, 1000000)
     # Create API
     host = host
-    API = f'{host}/create_block/'
+    API = f'{host}/send_block/'
     while True:
         b['nonce'] = nonce
         b['timestamp'] = str(datetime.datetime.now())
