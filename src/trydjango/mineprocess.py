@@ -21,7 +21,7 @@ def start_mine(host, transactions, difficulty):
         b['timestamp'] = str(datetime.datetime.now())
         b_json = json.dumps(b, sort_keys=True)
         sha = SHA384.new(b_json.encode()).hexdigest()
-        if sha.startswith('0' * difficulty):
+        if sha.startswith('0' * int(difficulty)):
             # Send API to process that we forked from
             block_details = {
                 'transactions': b['transactions'],
