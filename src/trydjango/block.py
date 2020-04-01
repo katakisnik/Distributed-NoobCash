@@ -171,8 +171,6 @@ class Block(object):
             new_index = previous_block.index + 1
             new_block = Block(**json.loads(block_json), index=new_index)
 
-           # if new_block.calculate_hash().hexdigest() != new_block.current_hash:
-            #    raise Exception('invalid has')
             if len(new_block.transactions) != nbcsettings.BLOCK_CAPACITY:
                 print(len(new_block.transactions))
                 raise Exception('invalid block capacity')

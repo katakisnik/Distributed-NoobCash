@@ -1,4 +1,7 @@
-"""Global variables for each state of our application."""
+"""
+Global variables for each state of our application.
+Every Participant has his own state
+"""
 from threading import RLock
 lock = RLock()
 

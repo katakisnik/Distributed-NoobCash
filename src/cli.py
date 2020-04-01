@@ -7,9 +7,6 @@ import datetime
 
 from trydjango.nbcsettings import SOURCE_INPUTS_PATH
 
-# BASE_DIR = os.path.dirname(__file__)
-# sys.path.append(BASE_DIR)
-
 # arguments parsing
 parser = argparse.ArgumentParser()
 parser.add_argument('host', type=str)

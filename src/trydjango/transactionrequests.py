@@ -34,9 +34,7 @@ class SendTransaction(View):
     def post(self, request):
         receiver = request.POST.get('receiver')
         amount = request.POST.get('amount')
-        token = request.POST.get('token')
-
-        # ?checkarisma me token?
+        
         res = Transaction.create_transaction(receiver, amount)
         if res is None:
             return HttpResponseBadRequest('invalid transaction')

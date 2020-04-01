@@ -2,7 +2,7 @@ import requests
 from . import state
 
 def broadcast(api, message):
-    #we send the message as data for each other /host/api
+    '''Everytime a transaction or a block is send, we use broadcast to inform all the participants'''
 
     for participant in state.participants.values():
         if participant['id'] == state.participant_id:

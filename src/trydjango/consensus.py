@@ -7,7 +7,10 @@ import copy
 import requests
 
 def validate_chain(blockchain, pending):
-
+    '''
+    Get a blockchain and validate it
+    Also replay any pending transactions
+    '''
     state.blockchain = [state.genesis_block]
     state.utxos = copy.deepcopy(state.genesis_utxos)
     state.valid_utxos = copy.deepcopy(state.genesis_utxos)
@@ -29,7 +32,11 @@ def validate_chain(blockchain, pending):
     return True
 
 def consensus():
-    
+    '''
+    Consensus is called when a conflict is found with a receiving block
+    To solve the problem, we get each participant's blockchain and in the end we keep the bigger
+    '''
+    #in the beginning max_blockchain is the participant's that called consensus
     MAX_BLOCKCHAIN = copy.deepcopy(state.blockchain)
     MAX_TRANSACTIONS = copy.deepcopy(state.transactions)
     MAX_UTXOS = copy.deepcopy(state.utxos)
@@ -51,6 +58,7 @@ def consensus():
 
         received_blockchain = json.loads(response.json()['blockchain'])
 
+        #if the received blockchain is smaller we ignore it
         if len(received_blockchain) < MAX_LENGTH:
             print(f'{pid}. Sorry smaller chain')
             continue

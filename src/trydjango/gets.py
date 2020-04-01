@@ -9,14 +9,6 @@ from . import nbcsettings, state, keygenerator, broadcast
 from .block import Block
 from .transaction import Transaction
 
-class GetSetting(View):
-    def get(self, request):
-
-
-        return JsonResponse({
-            'blockchain': json.dumps(nbcsettings.DIFFICULTY)
-        })
-
 #the coordinator is created and is added to the participants
 class CreateCoordinator(View):
     def post(self, request):
@@ -36,6 +28,7 @@ class CreateCoordinator(View):
 
         return HttpResponse(state.token)
 
+#participant gets created
 class CreateParticipant(View):
     def post(self, request):
         host = request.POST.get('host')
@@ -53,7 +46,7 @@ class CreateParticipant(View):
 
         return HttpResponse(state.token)
 
-
+#the coordinator connects its participant to the noobcash network
 class ConnectParticipant(View):
     def post(self, request):
         host = request.POST.get('host')
@@ -100,10 +93,9 @@ class ConnectParticipant(View):
                     'transaction': transaction.dump_sendable()
                 })
 
-            #miner should start here
-
         return HttpResponse()
 
+#after the participant is accepted in the network he gets all the data that he needs
 class AcceptParticipant(View):
     def post(self, request):
         participant_id = int(request.POST.get('participant_id'))
@@ -129,7 +121,7 @@ class GetParticipants(View):
             'participants': json.dumps(state.participants)
         })
 
-#class the practically returns the whole blockchain
+#returns every block with its transactions
 class GetAllTransactions(View):
     def get(self, request):
         blocks = []
