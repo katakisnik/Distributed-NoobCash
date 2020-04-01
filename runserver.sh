@@ -25,33 +25,33 @@ cd src/
 if [[ $HOSTNAME == "PC1" ]]
 then
 	echo 'Starting Server 1'
-	python manage.py runserver 192.168.1.5:8000 &
+	python manage.py runserver 192.168.1.5:8000 2>/dev/null &
 	echo 'Starting Server 2'
-	python manage.py runserver 192.168.1.5:8001 &
+	python manage.py runserver 192.168.1.5:8001 2>/dev/null &
 elif [[ $HOSTNAME == "PC2" ]]
 then
 	echo 'Starting Server 1'
-	python manage.py runserver 192.168.1.1:8000 &
+	python manage.py runserver 192.168.1.1:8000 2>/dev/null &
 	echo 'Starting Server 2'
-	python manage.py runserver 192.168.1.1:8001 &
+	python manage.py runserver 192.168.1.1:8001 2>/dev/null &
 elif [[ $HOSTNAME == "PC3" ]]
 then
 	echo 'Starting Server 1'
-	python manage.py runserver 192.168.1.4:8000 &
+	python manage.py runserver 192.168.1.4:8000 2>/dev/null &
 	echo 'Starting Server 2'
-	python manage.py runserver 192.168.1.4:8001 &
+	python manage.py runserver 192.168.1.4:8001 2>/dev/null &
 elif [[ $HOSTNAME == "PC4" ]]
 then
 	echo 'Starting Server 1'
-	python manage.py runserver 192.168.1.2:8000 &
+	python manage.py runserver 192.168.1.2:8000 2>/dev/null &
 	echo 'Starting Server 2'
-	python manage.py runserver 192.168.1.2:8001 &
+	python manage.py runserver 192.168.1.2:8001 2>/dev/null &
 elif [[ $HOSTNAME == "PC5" ]]
 then
 	echo 'Starting Server 1'
-	python manage.py runserver 192.168.1.3:8000 &
+	python manage.py runserver 192.168.1.3:8000 2>/dev/null &
 	echo 'Starting Server 2'
-	python manage.py runserver 192.168.1.3:8001 &
+	python manage.py runserver 192.168.1.3:8001 2>/dev/null &
 
 else
 	echo 'Not in VM'
