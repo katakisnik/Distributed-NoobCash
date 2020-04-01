@@ -21,7 +21,7 @@ from . import gets, transactionrequests, blockrequests
 # set urls
 
 urlpatterns = [
-    path('get_setting/', gets.GetSetting.as_view()),
+    #path('get_setting/', gets.GetSetting.as_view()),
     path('create_coordinator/', gets.CreateCoordinator.as_view()),
     path('get_participants/', gets.GetParticipants.as_view()),
     path('create_participant/', gets.CreateParticipant.as_view()),
