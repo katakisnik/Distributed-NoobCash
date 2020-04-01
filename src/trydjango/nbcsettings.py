@@ -2,7 +2,7 @@
 # Python settings
 PYTHON_VERSION = 'python3.7'
 
-BLOCK_CAPACITY = 1
+BLOCK_CAPACITY = 5
 
 # Blockchain settings
 DIFFICULTY = 4

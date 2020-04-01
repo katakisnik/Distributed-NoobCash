@@ -5,3 +5,10 @@ capacity 10, difficulty 4 -> 13.8 block/min
 capacity 1, difficulty 5 -> 4.97 block/min
 capacity 5, difficulty 5 -> 2.58 block/min
 capacity 10, difficulty 5 -> 1.8 block/min
+
+For 10 participators:
+capacity 1, difficulty 4 ->
+Block created at 2020-04-01 22:09:30.899984
+Final block at 2020-04-01 19:11:26.827609
+Total blocks = 63
+capacity 5, difficulty 4->

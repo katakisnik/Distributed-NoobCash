@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+# Check virual environment
+echo "Checking virtual environment.."
+if [[ "$VIRTUAL_ENV" == "" ]]
+then
+  source './venv/bin/activate'
+	echo 'virtual environment activated'
+else
+  echo 'Already in virtual environment'
+fi
+
 # Access Folder
 cd src/
 
