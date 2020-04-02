@@ -1,38 +1,23 @@
-For 5 participators:
-capacity 1, difficulty 4 -> 31.98 block/min
-capacity 5, difficulty 4 -> 27.42 block/min
-capacity 10, difficulty 4 -> 13.8 block/min
-capacity 1, difficulty 5 -> 4.97 block/min
-capacity 5, difficulty 5 -> 2.58 block/min
-capacity 10, difficulty 5 -> 1.8 block/min
+# For 5 participators:
+capacity 1, difficulty 4 -> 31.98 block/min, 2014.74 transactions/min
+capacity 5, difficulty 4 -> 27.42 block/min, 795.18 transactions/min
+capacity 10, difficulty 4 -> 13.8 block/min, 262.2 transactions/min
+capacity 1, difficulty 5 -> 4.97 block/min, 1098.37 transactions/min
+capacity 5, difficulty 5 -> 2.58 block/min, 157.38 transactions/min
+capacity 10, difficulty 5 -> 1.8 block/min, 61.2 transactions/min
 
-For 10 participators:
-capacity 1, difficulty 4 ->
-Block created at 2020-04-01 22:09:30.899984
-Final block at 2020-04-01 19:11:26.827609
-Total blocks = 63
+# For 10 participators:
+capacity 1, difficulty 4 -> 40.38 block/min, 2543.94 transactions/min
+capacity 5, difficulty 4 -> 53.70 block/min, 1557.3 transactions/min
+capacity 10, difficulty 4 -> 14.28 block/min, 271.32 transactions/min
+capacity 1, difficulty 5 -> 10.04 block/min, 2218.84 transactions/min
+capacity 5, difficulty 5 -> 15.09 block/min, 920.49 transactions/min
+capacity 10, difficulty 5 -> 2.42 block/min, 82.28 transactions/min
 
-capacity 5, difficulty 4 ->
-Block created at 2020-04-01 22:35:35.825890
-Final block at 2020-04-01 19:36:26.885566
-Total blocks = 29
 
-capacity 10, difficulty 4 ->
-Block created at 2020-04-01 23:24:43.260866
-Final block at 2020-04-01 20:26:16.255963
-Total blocks = 19
-
-capacity 1, difficulty 5 ->
-Block created at 2020-04-01 23:34:15.157740
-Final block at 2020-04-01 20:36:29.379884
-Total blocks = 221
-
-capacity 5, difficulty 5 ->
-Block created at 2020-04-02 00:54:04.476170
-Final block at 2020-04-01 21:58:08.543162
-Total blocks = 61
-
-capacity 10, difficulty 5 ->
-Block created at 2020-04-02 00:23:37.508499
-Final block at 2020-04-01 21:37:20.915398
-Total Blocks = 34
+# Total blocks = 63
+# Total blocks = 29
+# Total blocks = 19
+# Total blocks = 221
+# Total blocks = 61
+# Total Blocks = 34
