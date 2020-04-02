@@ -1,18 +1,18 @@
 # For 5 participators:
-capacity 1, difficulty 4 -> 31.98 block/min, 2014.74 transactions/min
-capacity 5, difficulty 4 -> 27.42 block/min, 795.18 transactions/min
-capacity 10, difficulty 4 -> 13.8 block/min, 262.2 transactions/min
-capacity 1, difficulty 5 -> 4.97 block/min, 1098.37 transactions/min
-capacity 5, difficulty 5 -> 2.58 block/min, 157.38 transactions/min
-capacity 10, difficulty 5 -> 1.8 block/min, 61.2 transactions/min
+capacity 1, difficulty 4 -> 31.98 block/min, 31.98 transactions/min
+capacity 5, difficulty 4 -> 27.42 block/min, 137.1 transactions/min
+capacity 10, difficulty 4 -> 13.8 block/min, 138 transactions/min
+capacity 1, difficulty 5 -> 4.97 block/min, 4.97 transactions/min
+capacity 5, difficulty 5 -> 2.58 block/min, 12.9 transactions/min
+capacity 10, difficulty 5 -> 1.8 block/min, 18 transactions/min
 
 # For 10 participators:
-capacity 1, difficulty 4 -> 40.38 block/min, 2543.94 transactions/min
-capacity 5, difficulty 4 -> 53.70 block/min, 1557.3 transactions/min
-capacity 10, difficulty 4 -> 14.28 block/min, 271.32 transactions/min
-capacity 1, difficulty 5 -> 10.04 block/min, 2218.84 transactions/min
-capacity 5, difficulty 5 -> 15.09 block/min, 920.49 transactions/min
-capacity 10, difficulty 5 -> 2.42 block/min, 82.28 transactions/min
+capacity 1, difficulty 4 -> 40.38 block/min, 40.38 transactions/min
+capacity 5, difficulty 4 -> 53.70 block/min, 268.5 transactions/min
+capacity 10, difficulty 4 -> 14.28 block/min, 142.8 transactions/min
+capacity 1, difficulty 5 -> 10.04 block/min, 10.04 transactions/min
+capacity 5, difficulty 5 -> 15.09 block/min, 75.45 transactions/min
+capacity 10, difficulty 5 -> 2.42 block/min, 24.2 transactions/min
 
 
 # Total blocks = 63

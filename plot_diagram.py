@@ -66,6 +66,6 @@ if __name__ == '__main__':
         os.mkdir(FOLDER)
 
     # Draw graph for block capacity
-    draw_graph(b5, b10, ylabel='Block capacity/min', fname='Block_per_min')
+    draw_graph(b5, b10, ylabel='Block added/min', fname='Block_per_min')
     # Draw graph for transactions
-    draw_graph(t5, t10, ylabel='Block transactions/min', fname='Throughput')
+    draw_graph(t5, t10, ylabel='transactions/min', fname='Throughput')
