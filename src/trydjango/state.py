@@ -2,9 +2,6 @@
 Global variables for each state of our application.
 Every Participant has his own state
 """
-from threading import RLock
-lock = RLock()
-
 # list of validated blocks
 blockchain = []
 
@@ -37,5 +34,3 @@ miner_pid = None
 genesis_block = None
 genesis_utxos = []
 
-# token for transaction authentication
-token = None

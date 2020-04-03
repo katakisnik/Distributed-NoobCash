@@ -101,7 +101,6 @@ while True:
                     # Create transaction dictionary
                     receiver_pubkey = balance[receiver_id]['publickey']
                     transaction = dict(receiver=receiver_pubkey,
-                                       amount=int(amount),
-                                       token='0')
+                                       amount=int(amount))
                     # Send post request
                     requests.post(host + '/send_transaction/', transaction)
